@@ -1,0 +1,227 @@
+programming language of oracle - ivan bayross
+
+//
+CREATE TABLE employee
+
+(
+	
+    emp_id INTEGER PRIMARY KEY, emp_name VARCHAR(40), dept_id INTEGER
+     
+);
+
+INSERT employee(emp_id, emp_name, dept_id)
+
+VALUES('1','AZAD','1');
+
+INSERT employee(emp_id, emp_name, dept_id)
+
+VALUES('2','ANKUR','1');
+
+INSERT employee(emp_id, emp_name, dept_id)
+
+VALUES('3','ARINDOM','1');
+
+INSERT employee(emp_id, emp_name, dept_id)
+
+VALUES('4','NAHID','2');
+
+INSERT employee(emp_id, emp_name, dept_id)
+
+VALUES('5','PIJUSH','3');
+
+INSERT employee(emp_id, emp_name, dept_id)
+
+VALUES('6','ASHIK','3');
+
+INSERT employee(emp_id, emp_name, dept_id)
+
+VALUES('7','ANIK','3');
+
+
+//
+CREATE TABLE dept
+
+(
+    
+   dept_id INTEGER PRIMARY KEY, location VARCHAR(40)
+                    
+);
+
+INSERT dept(dept_id,location)
+
+VALUES('1','Googong');
+
+INSERT dept(dept_id,location)
+
+VALUES('2','Burton');
+
+INSERT dept(dept_id,location)
+
+VALUES('3','Canberra');
+
+//
+
+
+CREATE TABLE project
+
+(
+    
+   project_id INTEGER PRIMARY KEY, name VARCHAR(40), location VARCHAR(40),dept_id integer
+                    
+);
+
+INSERT project(project_id, name, location, dept_id)
+
+VALUES('1','Googong Subdivision','Googong','1');
+
+INSERT project(project_id, name, location, dept_id)
+
+VALUES('2','Burton Highway','Burton','2');
+
+INSERT project(project_id, name, location, dept_id)
+
+VALUES('3','Monaro Highway','Canberra','3');
+
+//
+CREATE TABLE emp_prj_reln
+
+(   
+   emp_id integer, project_id INTEGER, dept_id integer, no_of_hour integer, duty_date date                   
+);
+
+INSERT emp_prj_reln(emp_id, project_id, dept_id, no_of_hour, duty_date)
+
+VALUES('1','1','1','5','2016-08-01');
+
+INSERT emp_prj_reln(emp_id, project_id, dept_id, no_of_hour, duty_date)
+
+VALUES('2','1','1','6','2016-08-01');
+
+INSERT emp_prj_reln(emp_id, project_id, dept_id, no_of_hour, duty_date)
+
+VALUES('3','3','1','4','2016-08-01');
+
+INSERT emp_prj_reln(emp_id, project_id, dept_id, no_of_hour, duty_date)
+
+VALUES('4','3','2','8','2016-08-01');
+
+INSERT emp_prj_reln(emp_id, project_id, dept_id, no_of_hour, duty_date)
+
+VALUES('5','3','3','2','2016-08-01');
+
+INSERT emp_prj_reln(emp_id, project_id, dept_id, no_of_hour, duty_date)
+
+VALUES('4','2','2','2','2016-08-01');
+
+INSERT emp_prj_reln(emp_id, project_id, dept_id, no_of_hour, duty_date)
+
+VALUES('5','2','3','6','2016-08-01');
+
+//
+
+
+CREATE TABLE paydetails
+
+(
+    
+   emp_id INTEGER PRIMARY KEY, dept_id integer, basic INTEGER, deduction INTEGER, additions INTEGER, doj DATE  
+                    
+);
+
+INSERT paydetails(emp_id, dept_id, basic, deduction, additions, doj)
+
+VALUES('1','1','36000','720','1288','2016-1-1');
+
+INSERT paydetails(emp_id, dept_id, basic, deduction, additions, doj)
+
+VALUES('2','1','30000','720','1288','2016-1-1');
+
+INSERT paydetails(emp_id, dept_id, basic, deduction, additions, doj)
+
+VALUES('3','1','78000','720','1288','2016-1-1');
+
+INSERT paydetails(emp_id, dept_id, basic, deduction, additions, doj)
+
+VALUES('4','2','47000','720','1288','2016-1-1');
+
+INSERT paydetails(emp_id, dept_id, basic, deduction, additions, doj)
+
+VALUES('5','3','32000','720','1288','2016-1-1');
+
+INSERT paydetails(emp_id, dept_id, basic, deduction, additions, doj)
+
+VALUES('6','3','20000','720','1288','2016-1-1');
+
+INSERT paydetails(emp_id, dept_id, basic, deduction, additions, doj)
+
+VALUES('7','3','25000','720','1288','2016-1-1');
+
+
+
+
+1.....
+
+SELECT emp_prj_reln.EMP_ID, EMPLOYEE.EMP_NAME, DEPT.DEPT_id, project.name,(7*emp_prj_reln.no_of_hour) AS weekly_hours 
+
+FROM emp_prj_reln, EMPLOYEE, DEPT, project
+
+WHERE project.name='Googong Subdivision' AND emp_prj_reln.project_id = project.project_id 
+
+AND project.location='Googong' AND emp_prj_reln.EMP_ID = EMPLOYEE.EMP_ID
+
+AND EMPLOYEE.DEPT_ID = DEPT.DEPT_ID AND DEPT.DEPT_id = '1' and emp_prj_reln.no_of_hour*7>20
+
+2....
+
+select distinct employee.emp_name, project.name, dept.location
+
+from employee,dept,project,emp_prj_reln
+
+where project.project_id=emp_prj_reln.project_id and 
+
+emp_prj_reln.dept_id=dept.dept_id and dept.dept_id=employee.dept_id and 
+
+emp_prj_reln.emp_id=employee.emp_id and project.location='Monaro Highway' and dept.location!='canberra';
+
+
+3.....
+
+Create view MONARO AS select employee.emp_name,project.name
+
+from employee,project,emp_prj_reln
+
+where employee.emp_id=emp_prj_reln.emp_id and emp_prj_reln.project_id=project.project_id 
+
+and project.name="Monaro Highway";
+
+
+Create view burton AS select employee.emp_name,project.name
+
+from employee,project,emp_prj_reln
+
+where employee.emp_id=emp_prj_reln.emp_id and emp_prj_reln.project_id=project.project_id 
+
+and project.name="BURTON Highway";
+
+
+select MONARO.emp_name,MONARO.name,burton.name 
+
+from MONARO,burton
+ 
+where MONARO.emp_name=burtoN.emp_name ;
+
+
+
+4...
+
+create view billing_system2 as 
+
+select emp_name,(paydetails.basic+paydetails.additions-paydetails.deduction) as net_salary, doj 
+
+from employee,dept,project,emp_prj_reln,paydetails 
+
+where project.project_id=emp_prj_reln.project_id and emp_prj_reln.emp_id=paydetails.emp_id 
+
+and emp_prj_reln.dept_id=dept.dept_id and dept.dept_id=employee.dept_id
+
+GROUP BY EMPLOYEE.EMP_id

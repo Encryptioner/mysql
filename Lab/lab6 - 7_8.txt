@@ -1,0 +1,112 @@
+CREATE table employee (emp_id integer primary key, emp_name varchar(50), dept_id integer, type_of_work varchar(40), hourly_rate integer, constraint check_cons check(type_of_work='partime' and hourly_rate>'25' and hourly_rate<'60'))
+
+insert into employee(emp_id,emp_name,dept_id,type_of_work,hourly_rate)
+values ('2','Pijush','32','fulltime','0')
+insert into employee(emp_id,emp_name,dept_id,type_of_work,hourly_rate)
+values ('3','Nijhum','33','partime','30')
+insert into employee(emp_id,emp_name,dept_id,type_of_work,hourly_rate)
+values ('4','Jim','34','fulltime','0')
+insert into employee(emp_id,emp_name,dept_id,type_of_work,hourly_rate)
+values ('5','Bijoy','35','partime','50');
+insert into employee(emp_id,emp_name,dept_id,type_of_work,hourly_rate)
+values ('6','Azad','36','partime','40');
+insert into employee(emp_id,emp_name,dept_id,type_of_work,hourly_rate)
+values ('7','Taijul','37','fulltime','0');
+insert into employee(emp_id,emp_name,dept_id,type_of_work,hourly_rate)
+values ('8','Ankur','38','partime','30');
+insert into employee(emp_id,emp_name,dept_id,type_of_work,hourly_rate)
+values ('9','Sojib','39','fulltime','0');
+
+create table dept (dept_id integer primary key, dept_name varchar(50),dept_location varchar(60))
+
+insert into dept(dept_id,dept_name,dept_location) values ('111','Engineering','Googong Subdivision')
+insert into dept(dept_id,dept_name,dept_location) values ('121','Foreman','Googong Subdivision');
+insert into dept(dept_id,dept_name,dept_location) values ('131','Engineering','Googong Subdivision');
+insert into dept(dept_id,dept_name,dept_location) values ('141','Labour','Kolkata');
+insert into dept(dept_id,dept_name,dept_location) values ('151','Foreman','CANADA');
+insert into dept(dept_id,dept_name,dept_location) values ('161','Engineering','Dhaka');
+insert into dept(dept_id,dept_name,dept_location) values ('171','Foreman','Googong Subdivision');
+insert into dept(dept_id,dept_name,dept_location) values ('181','Labour','Rajshahi')
+
+create table project(project_id integer primary key,project_name varchar(60),project_location varchar(60))
+
+insert into project(project_id,project_name,project_location) values ('21','Googong Subdivision','Googong');
+insert into project(project_id,project_name,project_location) values ('22','Googong Subdivision','Kolkata');
+insert into project(project_id,project_name,project_location) values ('23','Googong Subdivision','Canberra');
+insert into project(project_id,project_name,project_location) values ('24','Burton Highway','Canberra');
+insert into project(project_id,project_name,project_location) values ('25','Burton Highway','Dhaka');
+insert into project(project_id,project_name,project_location) values ('26','Online Quiz','Googong');
+insert into project(project_id,project_name,project_location) values ('27','Burton Highway','Googong');
+
+create table address(emp_id integer,street_no varchar(20),street_name varchar(60),city varchar(40),zip_code varchar(40))
+
+insert into address(emp_id,street_no,street_name,city,zip_code) values ('1','1001','GOOGONG SUBDIVISION','GOOGONG','2100');
+insert into address(emp_id,street_no,street_name,city,zip_code) values ('2','1002','QBN','Canberra','2200');
+insert into address(emp_id,street_no,street_name,city,zip_code) values ('3','1003','GANDHI','KOLKATA','2300');
+insert into address(emp_id,street_no,street_name,city,zip_code) values ('4','1004','OCTAT','RAJSHAHI','2400');
+insert into address(emp_id,street_no,street_name,city,zip_code) values ('5','1005','TALAIMARI','RAJSHAHI','2500');
+insert into address(emp_id,street_no,street_name,city,zip_code) values ('6','1006','FARMGATE','DHAKA','2600');
+insert into address(emp_id,street_no,street_name,city,zip_code) values ('7','1007','GOOGONG SUBDIVISION','GOOGONG','2700');
+insert into address(emp_id,street_no,street_name,city,zip_code) values ('8','1008','QUEENSLAND','AUSTRALIA','2800');
+
+create table ft_pt_work(project_id integer,emp_id integer,dept_id integer,num_of_hours integer)
+
+insert into ft_pt_work(project_id,emp_id,dept_id,num_of_hours) values('21','1','31','20');
+insert into ft_pt_work(project_id,emp_id,dept_id,num_of_hours) values('23','2','32','10');
+insert into ft_pt_work(project_id,emp_id,dept_id,num_of_hours) values('24','3','33','10');
+insert into ft_pt_work(project_id,emp_id,dept_id,num_of_hours) values('25','4','34','12');
+insert into ft_pt_work(project_id,emp_id,dept_id,num_of_hours) values('26','8','38','14');
+insert into ft_pt_work(project_id,emp_id,dept_id,num_of_hours) values('27','7','37','20');
+insert into ft_pt_work(project_id,emp_id,dept_id,num_of_hours) values('28','5','35','16');
+insert into ft_pt_work(project_id,emp_id,dept_id,num_of_hours) values('22','6','36','18');
+insert into ft_pt_work(project_id,emp_id,dept_id,num_of_hours) values('21','4','34','22');
+
+
+create table salary(emp_id integer,basic integer,allowance integer,deduction integer,net_salary integer,salary_date date)
+
+insert into salary(emp_id,basic,allowance,deduction,net_salary,salary_date) values ('1','50000','22500','4500','80500','2016-10-2');
+insert into salary(emp_id,basic,allowance,deduction,net_salary,salary_date) values ('2','10000','4500','900','16100','2016-10-1');
+insert into salary(emp_id,basic,allowance,deduction,net_salary,salary_date) values ('3','35000','15750','3150','56350','2016-10-3');
+insert into salary(emp_id,basic,allowance,deduction,net_salary,salary_date) values ('4','55000','24750','4950','88550','2016-10-3');
+insert into salary(emp_id,basic,allowance,deduction,net_salary,salary_date) values ('5','70000','31500','6300','112700','2016-10-2');
+insert into salary(emp_id,basic,allowance,deduction,net_salary,salary_date) values ('6','15000','6750','1350','24150','2016-10-2');
+
+select emp_name,dept_name,project_name,project_location from employee,dept,project,ft_pt_work where project.project_id=ft_pt_work.project_id and ft_pt_work.emp_id=employee.emp_id and ft_pt_work.dept_id=dept.dept_id and dept.dept_id=employee.dept_id and dept.dept_name='engineering' and project.project_name='googong subdivision' and project.project_location='googong';
+
+select emp_name,dept_name,project_name,project_location,num_of_hours*7 as TOTAL from employee,dept,project,ft_pt_work where project.project_id=ft_pt_work.project_id and ft_pt_work.emp_id=employee.emp_id and ft_pt_work.dept_id=dept.dept_id and dept.dept_id=employee.dept_id and dept.dept_name='labour' and project.project_name='googong subdivision' and project.project_location='googong' and ft_pt_work.num_of_hours*7>20;
+
+select distinct emp_name,project_name,project_location,street_no,street_name,city,zip_code from
+
+ employee,dept,project,ft_pt_work,address where project.project_id=ft_pt_work.project_id and 
+
+ft_pt_work.emp_id=address.emp_id and ft_pt_work.dept_id=dept.dept_id and dept.dept_id=employee.dept_id and 
+
+project.project_name='burton highway' and project.project_location!='canberra';
+
+select emp_name from employee,dept,project,ft_pt_work where project.project_id=ft_pt_work.project_id and ft_pt_work.emp_id=employee.emp_id and ft_pt_work.dept_id=dept.dept_id and dept.dept_id=employee.dept_id and (project.project_name='Googong Subdivision' and project.project_name='Burton Highway')
+
+ create table new1 as select employee.emp_name,employee.emp_id,count (ft_pt_work,project_id) as TOTAL from employee,project,ft_pt_work where employee.emp_id=ft_pt_work.emp_id and ft_pt_work.project_id=project.project_id and (project.project_id='' and project.project_id='') group by ft_pt_work.emp_id 
+
+
+create view billing_system as 
+
+select emp_name,dept_name,type_of_work,basic,deduction,net_salary 
+
+from employee,dept,project,ft_pt_work,salary,address 
+
+where project.project_id=ft_pt_work.project_id and ft_pt_work.emp_id=salary.emp_id and salary.emp_id=address.emp_id 
+
+and address.emp_id=employee.emp_id and ft_pt_work.dept_id=dept.dept_id and dept.dept_id=employee.dept_id
+
+
+//
+
+select distinct employee.emp_name, project.project_name, project.project_location, 
+
+dept.dept_location,address.street_no,address.street_name,address.city,address.zip_code 
+
+from employee,dept,project,ft_pt_work,address where project.project_id=ft_pt_work.project_id and 
+
+ft_pt_work.emp_id=address.emp_id and ft_pt_work.dept_id=dept.dept_id and dept.dept_id=employee.dept_id and 
+
+ft_pt_work.emp_id=employee.emp_id and project.project_location='canberra' and dept.dept_location!='canberra';

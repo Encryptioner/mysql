@@ -1,0 +1,326 @@
+programming language of oracle - ivan bayross
+
+//
+CREATE TABLE employee
+
+(
+	
+    emp_id INTEGER PRIMARY KEY, emp_name VARCHAR(40), dept_id INTEGER, type_of_work VARCHAR(40), hourly_rate INTEGER,
+    
+	CONSTRAINT chk_PART CHECK (hourly_rate>=25 AND hourly_rate>=60 AND type_of_work='PART TIME'),
+    
+    CONSTRAINT chk_FULL CHECK (hourly_rate>0 AND type_of_work='FULL TIME')
+     
+);
+
+INSERT employee(emp_id, emp_name, dept_id, type_of_work, hourly_rate)
+
+VALUES('1','AZAD','1','FULL TIME','0');
+
+INSERT employee(emp_id, emp_name, dept_id, type_of_work, hourly_rate)
+
+VALUES('2','ANKUR','1','FULL TIME','0');
+
+INSERT employee(emp_id, emp_name, dept_id, type_of_work, hourly_rate)
+
+VALUES('3','ARINDOM','1','FULL TIME','0');
+
+INSERT employee(emp_id, emp_name, dept_id, type_of_work, hourly_rate)
+
+VALUES('4','NAHID','2','FULL TIME','0');
+
+INSERT employee(emp_id, emp_name, dept_id, type_of_work, hourly_rate)
+
+VALUES('5','PIJUSH','3','PART TIME','40');
+
+INSERT employee(emp_id, emp_name, dept_id, type_of_work, hourly_rate)
+
+VALUES('6','ASHIK','3','PAER TIME','60');
+
+INSERT employee(emp_id, emp_name, dept_id, type_of_work, hourly_rate)
+
+VALUES('7','ANIK','3','PART TIME','30');
+
+
+//
+CREATE TABLE dept
+
+(
+    
+   dept_id INTEGER PRIMARY KEY, dept_name VARCHAR(40), dept_location VARCHAR(40)
+                    
+);
+
+INSERT dept(dept_id, dept_name, dept_location)
+
+VALUES('1','Engineering','Googong');
+
+INSERT dept(dept_id, dept_name, dept_location)
+
+VALUES('2','Foreman','Burton');
+
+INSERT dept(dept_id, dept_name, dept_location)
+
+VALUES('3','Labour','Canberra');
+
+//
+
+CREATE TABLE address
+
+(
+    
+   emp_id INTEGER PRIMARY KEY, street_no INTEGER, street_name VARCHAR(40), city VARCHAR(40), zip_code INTEGER
+                    
+);
+
+INSERT address(emp_id, street_no, street_name, city, zip_code)
+
+VALUES('1','12','Mohakhali','Canberra','2000');
+
+INSERT address(emp_id, street_no, street_name, city, zip_code)
+
+VALUES('2','10','Talaimari','Canberra','2000');
+
+INSERT address(emp_id, street_no, street_name, city, zip_code)
+
+VALUES('3','77','Kajla','Googong','3030');
+
+INSERT address(emp_id, street_no, street_name, city, zip_code)
+
+VALUES('4','56','Kajla','Googong','3030');
+
+INSERT address(emp_id, street_no, street_name, city, zip_code)
+
+VALUES('5','101','Lokkhipur','Burton','7000');
+
+INSERT address(emp_id, street_no, street_name, city, zip_code)
+
+VALUES('6','10','Mohakhali','Canberra','2000');
+
+INSERT address(emp_id, street_no, street_name, city, zip_code)
+
+VALUES('7','97','Lokkhipur','Burton','7000');
+
+
+//
+
+CREATE TABLE project
+
+(
+    
+   project_id INTEGER PRIMARY KEY, project_name VARCHAR(40), project_location VARCHAR(40)
+                    
+);
+
+INSERT project(project_id, project_name, project_location)
+
+VALUES('1','Googong Subdivision','Googong');
+
+INSERT project(project_id, project_name, project_location)
+
+VALUES('2','Burton Highway','Burton');
+
+INSERT project(project_id, project_name, project_location)
+
+VALUES('3','Canberra Headquartes','Canberra');
+
+//
+
+CREATE TABLE ft_pt_work
+
+(
+    
+   project_id INTEGER, emp_id INTEGER, dept_id INTEGER, num_of_hours INTEGER
+                    
+);
+
+INSERT ft_pt_work(project_id, emp_id, dept_id, num_of_hours)
+
+VALUES('1','1', '1','20');
+
+INSERT ft_pt_work(project_id, emp_id, dept_id, num_of_hours)
+
+VALUES('1','2', '1','20');
+
+INSERT ft_pt_work(project_id, emp_id, dept_id, num_of_hours)
+
+VALUES('3','3', '1','20');
+
+INSERT ft_pt_work(project_id, emp_id, dept_id, num_of_hours)
+
+VALUES('3','4', '2','20');
+
+INSERT ft_pt_work(project_id, emp_id, dept_id, num_of_hours)
+
+VALUES('1','5', '3','25');
+
+INSERT ft_pt_work(project_id, emp_id, dept_id, num_of_hours)
+
+VALUES('1','6', '3','30');
+
+INSERT ft_pt_work(project_id, emp_id, dept_id, num_of_hours)
+
+VALUES('1','7', '3','10');
+
+
+INSERT ft_pt_work(project_id, emp_id, dept_id, num_of_hours)
+
+VALUES('2','7', '3','15');
+
+INSERT ft_pt_work(project_id, emp_id, dept_id, num_of_hours)
+
+VALUES('2','1', '1','5');
+
+INSERT ft_pt_work(project_id, emp_id, dept_id, num_of_hours)
+
+VALUES('2','4', '2','10');
+
+
+//
+
+
+CREATE TABLE salary
+
+(
+    
+   emp_id INTEGER PRIMARY KEY, basic INTEGER, allowance INTEGER, deduction INTEGER, net_salary INTEGER, salary_date DATE,
+
+   CONSTRAINT chk_part CHECK (basic=employee.hourly_rate*ft_pt_work.num_of_hours AND employee.type_of_work='PART TIME'),
+
+   CONSTRAINT chk_full CHECK (basic>=5000 AND employee.type_of_work='FULL TIME')
+                    
+);
+
+INSERT salary(emp_id, basic, allowance, deduction, net_salary, salary_date)
+
+VALUES('1','8000','3600','720','12880','2016-1-1');
+
+INSERT salary(emp_id, basic, allowance, deduction, net_salary, salary_date)
+
+VALUES('2','6000','2700','540','9660','2016-6-1');
+
+INSERT salary(emp_id, basic, allowance, deduction, net_salary, salary_date)
+
+VALUES('3','7000','3150','630','11270','2016-3-1');
+
+INSERT salary(emp_id, basic, allowance, deduction, net_salary, salary_date)
+
+VALUES('4','5000','2250','450','8050','2016-1-1');
+
+INSERT salary(emp_id, basic, allowance, deduction, net_salary, salary_date)
+
+VALUES('5','1000','450','90','1610','2016-3-1');
+
+INSERT salary(emp_id, basic, allowance, deduction, net_salary, salary_date)
+
+VALUES('6','1800','810','162','2898','2016-1-1');
+
+INSERT salary(emp_id, basic, allowance, deduction, net_salary, salary_date)
+
+VALUES('7','1050','472','95','1690','2016-3-1');
+
+
+
+INSERT test1(number1, number2, number3)
+
+VALUES('10','20','30');
+
+
+1 //
+
+SELECT ft_pt_work.EMP_ID, EMPLOYEE.EMP_NAME, DEPT.DEPT_NAME, project.project_name
+
+FROM ft_pt_work, EMPLOYEE, DEPT, project
+
+WHERE project.project_name='Googong Subdivision' AND ft_pt_work.project_id = project.project_id 
+
+AND project.project_location='Googong' AND ft_pt_work.EMP_ID = EMPLOYEE.EMP_ID
+
+AND EMPLOYEE.DEPT_ID = DEPT.DEPT_ID AND DEPT.DEPT_NAME = 'Engineering'
+
+
+2 //
+
+SELECT ft_pt_work.EMP_ID, EMPLOYEE.EMP_NAME, project.project_name, DEPT.DEPT_NAME, ft_pt_work.num_of_hours
+
+FROM ft_pt_work, EMPLOYEE, DEPT, project
+
+WHERE ft_pt_work.EMP_ID = EMPLOYEE.EMP_ID AND ft_pt_work.DEPT_ID =DEPT.DEPT_ID
+
+AND DEPT.DEPT_NAME = 'Labour' AND EMPLOYEE.DEPT_ID = ft_pt_work.DEPT_ID  
+
+AND project.project_name='Googong Subdivision' AND project.project_location='Googong'
+
+AND ft_pt_work.num_of_hours>20
+
+GROUP BY ft_pt_work.EMP_ID
+
+3 //
+SELECT ft_pt_work.EMP_ID, EMPLOYEE.EMP_NAME, address.street_no, address.street_name, address.city, address.zip_code
+
+FROM ft_pt_work, EMPLOYEE, DEPT, project, address
+
+WHERE ft_pt_work.EMP_ID = EMPLOYEE.EMP_ID AND project.project_ID=ft_pt_work.project_ID
+
+AND project.project_location='Burton' AND ft_pt_work.DEPT_ID=DEPT.DEPT_ID AND NOT (DEPT.DEPT_location='Canberra')
+
+GROUP BY ft_pt_work.EMP_ID
+
+3..//
+
+select distinct employee.emp_name, project.project_name, project.project_location, 
+
+dept.dept_location,address.street_no,address.street_name,address.city,address.zip_code 
+
+from employee,dept,project,ft_pt_work,address where project.project_id=ft_pt_work.project_id and 
+
+ft_pt_work.emp_id=address.emp_id and ft_pt_work.dept_id=dept.dept_id and dept.dept_id=employee.dept_id and 
+
+ft_pt_work.emp_id=employee.emp_id and project.project_location='canberra' and dept.dept_location!='canberra';
+
+
+4 //
+select employee.emp_name,project.project_name,project.project_location from employee,project,ft_pt_work
+
+where employee.emp_id=ft_pt_work.emp_id and ft_pt_work.project_id=project.project_id 
+
+and project.project_name="googong subdivision" and project.project_name="burton highway";
+
+
+Create view googong_sub AS select employee.emp_name,project.project_name,project.project_location 
+
+from employee,project,ft_pt_work 
+
+where employee.emp_id=ft_pt_work.emp_id and ft_pt_work.project_id=project.project_id 
+
+and project.project_name="googong subdivision";
+
+
+Create view burton_highway AS select employee.emp_name,project.project_name,project.project_location 
+
+from employee,project,ft_pt_work 
+
+where employee.emp_id=ft_pt_work.emp_id and ft_pt_work.project_id=project.project_id 
+
+and project.project_name="burton highway";
+
+4.. //
+
+select googong_sub.emp_name,googong_sub.project_name,burton_highway.project_name 
+
+from googong_sub,burton_highway
+ 
+where googong_sub.emp_name=burton_highway.emp_name ;
+
+
+5 //
+
+create view billing_system as 
+
+select emp_name,dept_name,type_of_work,basic,deduction,net_salary 
+
+from employee,dept,project,ft_pt_work,salary,address 
+
+where project.project_id=ft_pt_work.project_id and ft_pt_work.emp_id=salary.emp_id and salary.emp_id=address.emp_id 
+
+and address.emp_id=employee.emp_id and ft_pt_work.dept_id=dept.dept_id and dept.dept_id=employee.dept_id

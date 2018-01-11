@@ -1,0 +1,4 @@
+SELECT employee.e_name , paydetails.doj FROM `paydetails` , employee WHERE employee.e_id = paydetails.e_id AND paydetails.doj > '2013-01-01'
+SELECT employee.e_name , payroll.payamount, payroll.pay_date FROM payroll,employee WHERE employee.e_id=payroll.e_id AND payroll.pay_date ='2016-08-01'
+SELECT employee.e_id,employee.e_name ,(paydetails.basic-paydetails.deduction+paydetails.addition) as totalsalry FROM employee , paydetails WHERE employee.e_id = paydetails.e_id AND (paydetails.basic-paydetails.deduction+paydetails.addition) BETWEEN 50000 AND 60000
+SELECT department.dep_name , COUNT(department.dep_name) AS numberofemploee FROM department WHERE department.dep_name = 'CSE'

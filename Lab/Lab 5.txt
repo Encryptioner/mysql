@@ -1,0 +1,180 @@
+CREATE TABLE submission2 (
+    
+sub_id INT not null auto_increment,
+    
+user_id VARCHAR(50) NOT NULL,
+    
+hell int not null,
+    
+    primary key(sub_id)
+    
+)
+INSERT INTO submission(sub_id,user_id,question,correct,wrong,not_answered) 
+
+VALUES 
+
+(1,'Ankur','computer_science_1',5,2,3);
+
+INSERT INTO submission(user_id,question,correct,wrong,not_answered) 
+
+VALUES 
+
+('Sakib','computer_science_1',6,3,1),
+
+('Shuvo','computer_science_2',7,1,2);
+
+CREATE TABLE Student
+
+( 
+
+	Stud_no varchar(40) PRIMARY KEY, Stud_name varchar(40) NOT NULL CHECK ( SUBSTR(Stud_name,1,1) = 'C')
+
+);
+//ALTER TABLE table1 
+   ADD CONSTRAINT table1_name_ck CHECK( substr(name, 1,1) NOT IN ('q','Q') );
+//
+CREATE TABLE Membership 
+
+( 
+
+	Mem_no varchar(40) PRIMARY KEY, Stud_no varchar(40) 
+
+);
+CREATE TABLE Book 
+
+( 
+
+	Book_no varchar(40) PRIMARY KEY, Book_name varchar(40), Author varchar(40)  
+
+);
+CREATE TABLE Iss_rec 
+
+( 
+
+	Iss_no integer PRIMARY KEY, Iss_date date, Mem_no varchar(40), Book_no varchar(40)
+
+);
+
+//
+CREATE TABLE Iss_rec2 
+( 
+	Iss_no integer PRIMARY KEY, Iss_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, Mem_no varchar(40), Book_no varchar(40)
+);
+
+no need to add date for that for this table
+OrderDate datetime NOT NULL DEFAULT GETDATE() don't work
+CREATE TABLE Sprzedaz3 (
+    Id int unsigned primary key,
+    
+    Data TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  
+    check (Data >= now())
+     
+      );
+
+//
+
+Alter table membership add foreign key (Stud_no) references student (Stud_no)
+//
+Alter table iss_rec add foreign key (Mem_no) references membership (Mem_no)
+//
+Alter table iss_rec add foreign key (Book_no) references Book (Book_no)
+
+//
+INSERT INTO student(Stud_No,Stud_name) VALUES ('C101','AZAD');
+
+INSERT INTO student(Stud_No,Stud_name) VALUES ('C102','AKIB');
+
+INSERT INTO student(Stud_No,Stud_name) VALUES ('C103','ANIK');
+
+INSERT INTO student(Stud_No,Stud_name) VALUES ('C104','ARINDOM');
+
+INSERT INTO student(Stud_No,Stud_name) VALUES ('C105','ANKUR');
+
+//
+INSERT INTO book(Book_No,Book_name,Author) VALUES ('901','ELECTRICAL','ALEXANDAR');
+
+INSERT INTO book(Book_No,Book_name,Author) VALUES ('902','CHEMISTRY','HAJARI');
+
+INSERT INTO book(Book_No,Book_name,Author) VALUES ('903','NETWORK','TANEBUM');
+
+INSERT INTO book(Book_No,Book_name,Author) VALUES ('904','NETWORK','TANEBUM');
+
+INSERT INTO book(Book_No,Book_name,Author) VALUES ('905','COMPUTER','HERBERT');
+
+//
+
+INSERT INTO membership(Mem_no,Stud_no) VALUES ('11','C102');
+
+INSERT INTO membership(Mem_no,Stud_no) VALUES ('12','C101');
+
+INSERT INTO membership(Mem_no,Stud_no) VALUES ('13','C105');
+
+INSERT INTO membership(Mem_no,Stud_no) VALUES ('14','C104');
+
+INSERT INTO membership(Mem_no,Stud_no) VALUES ('15','C103');
+
+//
+
+INSERT INTO Iss_rec(Iss_no,Iss_date,Mem_no,Book_no) VALUES ('1001','2016-09-05','11','902');
+
+INSERT INTO Iss_rec(Iss_no,Iss_date,Mem_no,Book_no) VALUES ('1002','2016-09-05','13','904');
+
+INSERT INTO Iss_rec(Iss_no,Iss_date,Mem_no,Book_no) VALUES ('1003','2016-09-04','12','903');
+
+INSERT INTO Iss_rec(Iss_no,Iss_date,Mem_no,Book_no) VALUES ('1004','2016-08-30','15','901');
+
+INSERT INTO Iss_rec(Iss_no,Iss_date,Mem_no,Book_no) VALUES ('1005','2016-09-05','11','905');
+
+INSERT INTO Iss_rec(Iss_no,Iss_date,Mem_no,Book_no) VALUES ('1012',curdate(),'13','904');
+
+//3
+SELECT STUDENT.STUD_NAME, BOOK.BOOK_NAME, BOOK.AUTHOR
+
+FROM STUDENT,BOOK,MEMBERSHIP,ISS_REC
+
+WHERE ISS_REC.MEM_NO=MEMBERSHIP.MEM_NO AND MEMBERSHIP.STUD_NO=STUDENT.STUD_NO AND ISS_REC.BOOK_NO=BOOK.BOOK_NO AND ISS_REC.ISS_DATE='2016-09-05';
+
+//4
+
+SELECT STUDENT.STUD_NO, STUDENT.STUD_NAME, MEMBERSHIP.MEM_NO
+
+FROM STUDENT,BOOK,MEMBERSHIP,ISS_REC
+
+WHERE ISS_REC.MEM_NO=MEMBERSHIP.MEM_NO AND MEMBERSHIP.STUD_NO=STUDENT.STUD_NO AND ISS_REC.BOOK_NO=BOOK.BOOK_NO AND BOOK.AUTHOR='TANEBUM';
+
+//5
+
+SELECT STUDENT.STUD_NO, STUDENT.STUD_NAME, MEMBERSHIP.MEM_NO, COUNT(ISS_REC.MEM_NO) AS BOOK_BORROWED
+
+FROM STUDENT,MEMBERSHIP,ISS_REC,BOOK
+
+WHERE ISS_REC.MEM_NO=MEMBERSHIP.MEM_NO AND MEMBERSHIP.STUD_NO=STUDENT.STUD_NO AND ISS_REC.BOOK_NO=BOOK.BOOK_NO
+
+GROUP BY STUDENT.STUD_NO
+
+//6 done
+SELECT STUDENT.STUD_NO,STUDENT.STUD_NAME, COUNT(ISS_REC.MEM_NO) AS BOOK_BORROWED 
+
+FROM STUDENT,MEMBERSHIP,ISS_REC,BOOK 
+
+WHERE STUDENT.STUD_NO=MEMBERSHIP.STUD_NO AND MEMBERSHIP.MEM_NO=ISS_REC.MEM_NO AND BOOK.BOOK_NO=ISS_REC.BOOK_NO 
+
+GROUP BY STUD_NAME HAVING COUNT(ISS_REC.MEM_NO)=2
+
+//7
+SELECT BOOK.BOOK_NO,BOOK.BOOK_NAME,STUDENT.STUD_NAME
+
+FROM STUDENT,MEMBERSHIP,ISS_REC,BOOK
+
+WHERE ISS_REC.MEM_NO=MEMBERSHIP.MEM_NO AND MEMBERSHIP.STUD_NO=STUDENT.STUD_NO AND ISS_REC.BOOK_NO=BOOK.BOOK_NO AND STUDENT.STUD_NO='C105'
+
+GROUP BY BOOK.BOOK_NO
+
+//8
+
+SELECT student.stud_name,book.book_no,book.book_name,book.author,iss_rec.iss_date 
+
+FROM student,book,membership,iss_rec 
+
+WHERE iss_rec.iss_date=curdate() AND student.stud_no=membership.stud_no AND membership.mem_no=iss_rec.mem_no AND book.book_no=iss_rec.book_no
+

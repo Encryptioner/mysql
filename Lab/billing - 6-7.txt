@@ -1,0 +1,55 @@
+
+
+\* Q1 List the names of all Engineers in Googong Subdivision  project located at Googong city *\
+
+select employee.emp_name,employee.emp_id,project.project_name,project.project_location,dept.dept_name from
+employee,project,dept
+where employee.dept_id=dept.dept_id and dept.dept_name="engineering" and project.project_name='googong subdivision'
+and project.project_location="googong";
+
+/* Q2 List the names of all Labour in Googong Subdivision project located at Googong city who work more than 20 hours per week.*/
+
+select distinct employee.emp_name,employee.emp_id,dept.dept_name,project.project_name,project.project_location, 
+ft_pt_work.num_of_hours from
+employee,dept,project,ft_pt_work
+where employee.dept_id=dept.dept_id  and dept.dept_id=ft_pt_work.dept_id and project.project_id=ft_pt_work.project_id 
+and project.project_name='googong subdivision' 
+and project.project_location='googong' and dept.dept_name='labor'
+and ft_pt_work.num_of_hours>20;
+
+/*3.Retrieve the names and addresses of all employees who work on at least one
+ project located in Burton but whose department has no location in Canberra.*/
+
+select distinct employee.emp_name,address.street_no,address.street_name,address.city,project.project_location
+from employee,address,project
+where employee.emp_id=address.emp_id and project.project_location="burton";
+
+/*Retrieve the names of employees who work on both the  Googong Subdivision and Burton Highway project */
+
+
+select employee.emp_name,project.project_name,project.project_location from employee,project,ft_pt_work
+where employee.emp_id=ft_pt_work.emp_id and ft_pt_work.project_id=project.project_id 
+and project.project_name="googong subdivision" and project.project_name="burton highway";
+
+
+Create or replace view googong_sub AS select employee.emp_name,project.project_name,project.project_location from
+employee,project,ft_pt_work where employee.emp_id=ft_pt_work.emp_id and ft_pt_work.project_id=project.project_id 
+and project.project_name="googong subdivision";
+
+Create view burton_highway AS select employee.emp_name,project.project_name,project.project_location from
+employee,project,ft_pt_work where employee.emp_id=ft_pt_work.emp_id and ft_pt_work.project_id=project.project_id 
+and project.project_name="burton highway";
+
+select googong_sub.emp_name,googong_sub.project_name,burton_highway.project_name from googong_sub,burton_highway 
+where googong_sub.emp_name=burton_highway.emp_name ;
+
+
+
+
+/*q5 5.	Create a view which lists out the emp_name, dept_name, type_of_work, basic, 
+deduction, net_salary from the above relational databases.*/
+
+Create view Australia_project_salary AS select employee.emp_name,dept.dept_name,employee.type_of_work,salary.basic,
+.09*basic AS deduction,(basic+.45*basic-.09*basic+.25*basic) AS net_salary
+from employee,dept,salary
+where employee.dept_id=dept.dept_id and employee.emp_id=salary.emp_id;
